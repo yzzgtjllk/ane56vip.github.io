@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>运费计算器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .calculator {
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .header {
+            background-color: #FFD700;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        select, input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .result {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="header">VIP客户运费计算器</div>
+        
+        <div class="input-group">
+            <label for="destination">目的省份/城市：</label>
+            <select id="destination" onchange="calculate()">
+                <option value="">-- 请选择 --</option>
+                <option value="0.5">天津</option>
+                <option value="0.5">河北</option>                
+                <option value="0.6">山东</option>
+                <option value="0.6">河南</option>
+                
+                <option value="0.7">内蒙（呼市、包头）</option>
+                <option value="0.7">辽宁</option>
+                <option value="0.7">山西</option>
+                <option value="0.7">江苏</option>
+                <option value="0.7">上海</option>
+                <option value="0.7">浙江</option>
+                <option value="0.8">安徽</option>
+                <option value="0.9">江西</option>
+                <option value="0.8">湖南</option>
+                <option value="0.8">湖北</option>
+                <option value="0.9">西南</option>
+                <option value="0.9">福建</option>
+                <option value="0.9">陕西(西安分拨)</option>
+                <option value="0.9">广东</option>
+                <option value="1">吉林（长春分拨）</option>
+                <option value="1">黑龙江（哈尔滨分拨）</option>
+                <option value="1.1">四川</option>
+                <option value="1.1">重庆</option>
+                <option value="1.4">广西（南宁分拨）</option>
+                <option value="1.4">云南（昆明分拨）</option>
+                <option value="1.5">贵州（贵阳分拨）</option>
+            </select>
+        </div>
+        
+        <div class="input-group">
+            <label for="weight">货物重量（公斤）：</label>
+            <input type="number" id="weight" min="1" max="300" placeholder="1-300公斤" oninput="calculate()">
+        </div>
+        
+        <div class="result">
+            运费计算结果：<span id="result">0.00</span> 元
+        </div>
+    </div>
+
+    <script>
+        function calculate() {
+            // 获取选择的单价
+            let destinationSelect = document.getElementById('destination');
+            let unitPrice = parseFloat(destinationSelect.value);
+            
+            // 获取重量
+            let weightInput = document.getElementById('weight');
+            let weight = parseFloat(weightInput.value);
+            
+            // 计算运费
+            if (!isNaN(unitPrice) && !isNaN(weight) && weight >= 1 && weight <= 300) {
+                // 不足5公斤按5公斤计算
+                let effectiveWeight = weight < 5 ? 5 : weight;
+                let freight = unitPrice * effectiveWeight + 20;
+                document.getElementById('result').textContent = freight.toFixed(2);
+            } else {
+                document.getElementById('result').textContent = "0.00";
+            }
+        }
+    </script>
+</body>
+</html>
